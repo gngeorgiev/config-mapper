@@ -8,9 +8,14 @@
 - Expands `~` and environment variables in both source patterns and target paths.
 - Safe replacement behavior with automatic backup of existing targets.
 - `--dry-run` mode to preview operations without touching the filesystem.
-- Unit and integration test coverage.
 
 ## Installation
+
+### Install from GitHub
+
+```bash
+cargo install --git https://github.com/gngeorgiev/config-mapper --locked
+```
 
 ### Build from source
 
@@ -30,24 +35,58 @@ Create `configs.toml` in your working directory, or pass a custom path with `--c
 
 ```toml
 [configs]
-"dotfiles/.config/*" = "~/.config"
-"dotfiles/home/*" = "~"
+".config/*" = "~/.config"
+"home/*" = "~"
+"agentlb/*" = "~/.agentlb"
 ```
 
 Each key is a glob pattern for source entries.
 Each value is a target directory where matching filenames will be linked.
 
+## Dotfiles Flow (`~/dot`)
+
+Intended usage is to run this tool from your dotfiles repository root at `~/dot`.
+
+Before running `config-mapper`:
+
+```text
+~/dot
+├── .config/
+│   ├── nvim/
+│   └── starship.toml
+├── home/
+│   ├── .bashrc
+│   └── .gitconfig
+├── agentlb/
+│   └── config.toml
+└── configs.toml
+```
+
+After running `config-mapper`:
+
+```text
+~
+├── .bashrc -> ~/dot/home/.bashrc
+├── .gitconfig -> ~/dot/home/.gitconfig
+├── .config/
+│   ├── nvim -> ~/dot/.config/nvim
+│   └── starship.toml -> ~/dot/.config/starship.toml
+└── .agentlb/
+    └── config.toml -> ~/dot/agentlb/config.toml
+```
+
 ## Usage
 
 ```bash
-# Uses current directory and ./configs.toml
+# From ~/dot, using ./configs.toml
+cd ~/dot
 config-mapper
 
 # Preview only
 config-mapper --dry-run
 
-# Use a different config file
-config-mapper --config ./configs.example.toml
+# Use the shipped example config
+config-mapper --config ./example/configs.example.toml
 
 # Resolve relative paths from a different working directory
 config-mapper --working-dir /path/to/workspace

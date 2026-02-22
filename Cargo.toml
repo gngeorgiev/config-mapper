@@ -6,6 +6,9 @@ rust-version = "1.85"
 description = "Map local config files into target locations via symlinks with automatic backups."
 license = "MIT"
 readme = "README.md"
+repository = "https://github.com/gngeorgiev/config-mapper"
+homepage = "https://github.com/gngeorgiev/config-mapper"
+documentation = "https://github.com/gngeorgiev/config-mapper#readme"
 keywords = ["dotfiles", "symlink", "config", "cli"]
 categories = ["command-line-utilities", "filesystem"]
 

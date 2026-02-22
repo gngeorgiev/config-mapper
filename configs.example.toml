@@ -1,8 +1,0 @@
-# Example mapping file.
-# Keys are source glob patterns.
-# Values are target directories.
-
-[configs]
-"dotfiles/.config/*" = "~/.config"
-"dotfiles/home/*" = "~"
-"dotfiles/agentlb/*" = "~/.agentlb"
